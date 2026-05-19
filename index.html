@@ -1,0 +1,213 @@
+<!doctype html>
+<html lang="sk">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+    <meta name="theme-color" content="#0b0f08" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+    <meta name="apple-mobile-web-app-title" content="SWIPE BIN" />
+    <title>SWIPE BIN | NATUR-PACK</title>
+    <link rel="manifest" href="manifest.json" />
+    <link rel="icon" href="assets/icon.svg" type="image/svg+xml" />
+    <link rel="apple-touch-icon" href="assets/icon-192.png" />
+    <script>
+      (() => {
+        const setAppHeight = () => {
+          document.documentElement.style.setProperty("--app-height", `${window.innerHeight}px`);
+        };
+        let resizeTimer;
+
+        setAppHeight();
+        window.addEventListener("resize", () => {
+          clearTimeout(resizeTimer);
+          resizeTimer = window.setTimeout(setAppHeight, 180);
+        }, { passive: true });
+        window.addEventListener("orientationchange", () => {
+          window.setTimeout(setAppHeight, 260);
+        }, { passive: true });
+      })();
+    </script>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <div class="app-shell" id="app">
+      <section class="screen screen-home is-active" data-screen="home" aria-label="Úvodná obrazovka">
+        <div class="home-noise" aria-hidden="true"></div>
+        <header class="home-header">
+          <button
+            class="icon-button settings-button"
+            id="soundToggle"
+            type="button"
+            data-action="sound"
+            aria-label="Zvuk zapnutý"
+            aria-pressed="true"
+          >
+            <span aria-hidden="true">♪</span>
+          </button>
+          <span class="brand-pill">NATUR-PACK</span>
+        </header>
+
+        <div class="brand-lockup" aria-label="SWIPE BIN">
+          <span class="speed-lines" aria-hidden="true"></span>
+          <div>
+            <strong>SWIPE</strong>
+            <strong>BIN</strong>
+          </div>
+        </div>
+
+        <p class="tagline">Hraj. Trieď. Vyhraj.</p>
+
+        <div class="hero-zone">
+          <span class="energy-ring ring-one" aria-hidden="true"></span>
+          <span class="energy-ring ring-two" aria-hidden="true"></span>
+          <p class="speech-bubble">Ehm…<br />kam s tým?</p>
+          <img src="assets/samo.png" class="mascot" alt="Samo Správny" />
+        </div>
+
+        <div class="home-actions">
+          <button class="primary-button" type="button" data-action="start">
+            <span aria-hidden="true">▶</span>
+            HRAŤ
+          </button>
+          <button class="ghost-button" type="button" data-action="how">Ako hrať?</button>
+        </div>
+      </section>
+
+      <section class="screen screen-game" data-screen="game" aria-label="Hra">
+        <header class="game-topbar">
+          <button class="circle-button" type="button" data-action="home" aria-label="Späť na úvod">
+            <span aria-hidden="true">Ⅱ</span>
+          </button>
+          <div class="score-box">
+            <span>SKÓRE</span>
+            <strong id="scoreValue">0</strong>
+          </div>
+          <div class="lives-box" aria-live="polite">
+            <span aria-hidden="true">❤</span>
+            <strong id="livesValue">3</strong>
+          </div>
+        </header>
+
+        <div class="game-dialogue" aria-hidden="true">
+          <img class="game-mascot-peek" src="assets/samo.png" alt="" />
+          <p class="game-speech" id="gameSpeech">Ehm… kam s tým?</p>
+        </div>
+
+        <main class="game-stage" aria-live="polite">
+          <article class="waste-card" id="wasteCard" tabindex="0" aria-label="Predmet odpadu">
+            <button class="zoom-button" type="button" aria-label="Priblížiť predmet">
+              <span aria-hidden="true">⌕</span>
+            </button>
+            <div class="item-visual" id="itemVisual" aria-hidden="true"></div>
+            <h1 id="itemName">Kelímok</h1>
+            <p id="itemHint">Kam s tým?</p>
+          </article>
+        </main>
+
+        <nav class="bins" aria-label="Kontajnery">
+          <button class="bin bin-paper" type="button" data-bin="paper" aria-label="PAPIER">
+            <span class="bin-lid" aria-hidden="true"></span>
+            <span class="recycle-mark" aria-hidden="true">♻</span>
+            <strong>PAPIER</strong>
+          </button>
+          <button class="bin bin-plastic" type="button" data-bin="plastic" aria-label="PLAST">
+            <span class="bin-lid" aria-hidden="true"></span>
+            <span class="recycle-mark" aria-hidden="true">♻</span>
+            <strong>PLAST</strong>
+          </button>
+          <button class="bin bin-glass" type="button" data-bin="glass" aria-label="SKLO">
+            <span class="bin-lid" aria-hidden="true"></span>
+            <span class="recycle-mark" aria-hidden="true">♻</span>
+            <strong>SKLO</strong>
+          </button>
+          <button class="bin bin-bio" type="button" data-bin="bio" aria-label="BIO">
+            <span class="bin-lid" aria-hidden="true"></span>
+            <span class="recycle-mark" aria-hidden="true">♻</span>
+            <strong>BIO</strong>
+          </button>
+          <button class="bin bin-mixed" type="button" data-bin="mixed" aria-label="ZMES">
+            <span class="bin-lid" aria-hidden="true"></span>
+            <span class="recycle-mark" aria-hidden="true">♻</span>
+            <strong>ZMES</strong>
+          </button>
+        </nav>
+
+        <div class="samo-line" role="status" aria-live="polite">
+          <img src="assets/samo.png" alt="" aria-hidden="true" />
+          <p id="samoMessage">Rozhodni bez nápovedy.</p>
+          <div class="lightning-badge" aria-label="Rýchlosť">
+            <span aria-hidden="true">ϟ</span>
+            <strong id="comboValue">2</strong>
+          </div>
+        </div>
+      </section>
+
+      <section class="screen screen-how" data-screen="how" aria-label="Ako hrať">
+        <header class="plain-header">
+          <button class="back-button" type="button" data-action="home" aria-label="Späť">
+            <span aria-hidden="true">‹</span>
+          </button>
+          <h1>AKO HRAŤ</h1>
+        </header>
+
+        <div class="how-card">
+          <article>
+            <span class="how-icon" aria-hidden="true">↔</span>
+            <div>
+              <h2>Swipeuj odpad</h2>
+              <p>Potiahni kartu k správnemu košu.</p>
+            </div>
+          </article>
+          <article>
+            <span class="how-icon" aria-hidden="true">ϟ</span>
+            <div>
+              <h2>Triedi správne</h2>
+              <p>Rýchla odpoveď znamená viac bodov.</p>
+            </div>
+          </article>
+          <article>
+            <span class="how-icon heart" aria-hidden="true">❤</span>
+            <div>
+              <h2>Získavaj body</h2>
+              <p>Máš 3 životy. Nedaj sa pomýliť.</p>
+            </div>
+          </article>
+        </div>
+
+        <button class="primary-button how-cta" type="button" data-action="start">ROZUMIEM, IDEM NA TO!</button>
+        <img class="corner-mascot" src="assets/samo.png" alt="" aria-hidden="true" />
+      </section>
+
+      <section class="screen screen-over" data-screen="over" aria-label="Koniec hry">
+        <button class="icon-button close-button" type="button" data-action="home" aria-label="Zavrieť">
+          <span aria-hidden="true">×</span>
+        </button>
+
+        <p class="over-kicker">KONIEC HRY</p>
+        <p class="score-label">SKÓRE</p>
+        <strong class="final-score" id="finalScore">0</strong>
+        <h1>Skvelá práca!</h1>
+
+        <div class="mascot-stage mascot-stage-over">
+          <img class="mascot-img" src="assets/samo.png" alt="Samo Správny oslavuje výsledok" />
+        </div>
+
+        <p class="rank-line" id="rankLine">Triediš lepšie než <strong>0&nbsp;%</strong> Slovenska!</p>
+
+        <div class="over-actions">
+          <button class="primary-button" type="button" data-action="share">
+            <span aria-hidden="true">↗</span>
+            ZDIEĽAŤ
+          </button>
+          <button class="ghost-button" type="button" data-action="restart">
+            <span aria-hidden="true">↻</span>
+            HRAŤ ZNOVU
+          </button>
+        </div>
+      </section>
+    </div>
+
+    <script src="app.js" defer></script>
+  </body>
+</html>

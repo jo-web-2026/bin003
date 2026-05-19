@@ -1,0 +1,31 @@
+{
+  "name": "SWIPE BIN",
+  "short_name": "SWIPE BIN",
+  "description": "Mobilná PWA hra na triedenie odpadu pre NATUR-PACK s maskotom Samo Správny.",
+  "start_url": "./index.html",
+  "scope": "./",
+  "display": "standalone",
+  "orientation": "portrait",
+  "background_color": "#050604",
+  "theme_color": "#d8ff1f",
+  "icons": [
+    {
+      "src": "assets/icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "assets/icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "assets/icon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    }
+  ]
+}
